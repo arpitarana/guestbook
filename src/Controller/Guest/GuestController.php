@@ -6,6 +6,7 @@ use App\Entity\Guest\GuestDetail;
 use App\Entity\User\User;
 use App\Form\Guest\GuestDetailType;
 use App\Service\Guest\GuestManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,14 +23,20 @@ class GuestController extends AbstractController
      *
      * @Route("/guests", name="guests_list")
      */
-    public function index(GuestManager $guestManager)
+    public function index(Request $request, GuestManager $guestManager, PaginatorInterface $paginator)
     {
         /* @var User $user */
         $user = $this->getUser();
         $guestData = $guestManager->getGuestDataByRole(User::ROLE_ADMIN, $user);
 
+        $pagination = $paginator->paginate(
+            $guestData, /* guest data list object */
+            $request->query->getInt('page', 1)/* page number */,
+            GuestDetail::PAGE_RANGE
+        );
+
         return $this->render('guest/index.html.twig', [
-            'guestData' => $guestData
+            'guestData' => $pagination
         ]);
     }
 

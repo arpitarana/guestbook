@@ -34,7 +34,7 @@ class GuestManager
     public function getGuestDataByRole($role, User $user)
     {
         if (in_array($role, $user->getRoles())) {
-            $guestData = $this->entityManager->getRepository(GuestDetail::class)->findAll();
+            $guestData = $this->entityManager->getRepository(GuestDetail::class)->getGuestData();
         }
         else {
             $guestData = $this->entityManager->getRepository(GuestDetail::class)->getGuestData($user->getId());

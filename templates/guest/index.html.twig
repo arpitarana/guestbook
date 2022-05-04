@@ -78,6 +78,10 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <br>
+                <div class="navigation">
+                    {{ knp_pagination_render(guestData, null, [], {"objectsName":"Guestdata"}) }}
+                </div>
             </div>
         </div>
     </div>

@@ -16,13 +16,15 @@ class GuestDetailRepository extends EntityRepository
      * @param int $userId
      * @return int|mixed|string
      */
-    public function getGuestData($userId)
+    public function getGuestData($userId = null)
     {
         $qb = $this->createQueryBuilder('g');
-        $qb->select('g')
-            ->where('g.user = :userId')
-            ->setParameter('userId', $userId);
-
-        return $qb->getQuery()->getResult();
+        $qb->select('g');
+        if ($userId) {
+            $qb->where('g.user = :userId')
+                ->setParameter('userId', $userId);
+        }
+        $qb->orderBy('g.id', 'DESC');
+        return $qb->getQuery();
     }
 }
