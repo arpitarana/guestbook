@@ -1,0 +1,19 @@
+App\Entity\Master\Resource:
+    type: entity
+    table: resources
+    repositoryClass: App\Repository\Master\ResourceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    oneToMany:
+        resourcePermissions:
+            targetEntity: ResourcePermission
+            mappedBy: resource
+            cascade:  [persist]

@@ -1,0 +1,28 @@
+App\Entity\Master\PermissionMatrix:
+    type: entity
+    table: permission_matrix
+    repositoryClass: App\Repository\Master\PermissionMatrixRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        granted:
+            type: boolean
+            column: is_granted
+            nullable: true
+    manyToOne:
+        role:
+            targetEntity: Role
+            inversedBy: permissionMatrices
+            joinColumn:
+                name: role_id
+                referencedColumnName: id
+        resourcePermission:
+            targetEntity: ResourcePermission
+            inversedBy: permissionMatrices
+            joinColumn:
+                name: resourcePermission_id
+                referencedColumnName: id

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Guest data
+{% endblock %}
+
+{% block body %}
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Guest Details
+                    <a href="{{ path('guest_entry') }}" class="btn btn-gradient-primary btn-rounded btn-fw" style="float: right;">Add</a>
+                </h4>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th> Guest name </th>
+                        <th> Detail </th>
+                        <th> Status </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for guestDetail in guestData %}
+                        <tr>
+                            <td> {{ guestDetail.name}} </td>
+                            <td>
+                                {% if guestDetail.type == 'text' %}
+                                    {{ guestDetail.information }}
+                                {% else %}
+                                    <a href="{{ path('guest_view', {'id':guestDetail.id}) }}"><img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if guestDetail.status == 1 %}
+                                    {% set approvedStatus = 'Approved' %}
+                                    <label class="badge badge-success">Approved</label>
+                                {% elseif guestDetail.status == -1 %}
+                                    {% set approvedStatus = 'Disapproved' %}
+                                    <label class="badge badge-danger">Disapproved</label>
+                                {% else %}
+                                    <label class="badge badge-warning">Pending</label>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">Action</button>
+                                    <div class="dropdown-menu">
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <a href="{{ path('guest_edit', {'id':guestDetail.id}) }}"  class="dropdown-item">Edit</a>
+                                            <a href="{{ path('guest_remove', {'id':guestDetail.id}) }}"  class="dropdown-item" onclick="return confirm('Are you sure want to delete?');">Delete</a>
+                                            <a href="{{ path('guest_view', {'id':guestDetail.id}) }}"  class="dropdown-item">View</a>
+                                            {% if guestDetail.status == 1 %}
+                                                <a href="{{ path('guest_disapprove', {'id':guestDetail.id}) }}" class="dropdown-item" onclick="return confirm('Are you sure want to disapprove?');">Disapprove</a>
+                                            {% else %}
+                                                <a href="{{ path('guest_approve', {'id':guestDetail.id}) }}" class="dropdown-item" onclick="return confirm('Are you sure want to approve?');">Approve</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if guestDetail.status == 0 %}
+                                                <a href="{{ path('guest_edit', {'id':guestDetail.id}) }}"  class="dropdown-item">Edit</a>
+                                            {% else %}
+                                                <a href="javascript:void(0);"  class="dropdown-item cannot-edit" data-status="{{ approvedStatus }}">Edit</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" align="center">
+                                No record found
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('guest-detail') }}
+{% endblock %}

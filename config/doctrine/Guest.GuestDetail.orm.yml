@@ -1,0 +1,51 @@
+App\Entity\Guest\GuestDetail:
+  type: entity
+  table: guest_detail
+  repositoryClass: App\Repository\Guest\GuestDetailRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 255
+      column: name
+    status:
+      type: integer
+      length: 2
+      column: status
+    type:
+      type: string
+      length: 50
+      column: type
+    information:
+      type: string
+      length: 255
+      nullable: true
+      column: information
+    image:
+      type: string
+      length: 255
+      nullable: true
+    createdAt:
+      type: datetime
+      nullable: true
+      column: created_at
+      gedmo:
+        timestampable: { on: create }
+    updatedAt:
+      type: datetime
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable: { on: update }
+  manyToOne:
+    user:
+      targetEntity: App\Entity\User\User
+      inversedBy: guestDetails
+      joinColumn:
+        name: user_id
+        referenceColumnName: id

@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Permission Matrix
+{% endblock %}
+
+{% block header %}
+    <h3 class="page-title">Permission Matrix</h3>
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <!-- BEGIN FORM-->
+            <form method="POST" enctype="multipart/form-data"
+                  class="form-horizontal">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-sm-12">
+                    <select name="search-select" class="chosen-select width_100p" id="search-role" data-placeholder="Search">
+                        <option id=" " value="SearchRoles">Select Role </option>
+                        {% for role in roles %}
+                            <option id="{{ role.id }}" value="{{ role.name }}">
+                                {{ role.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    </div>
+                    <br>
+                    <div class="responsive">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th>Resources</th>
+                            {% for permissionType in permissionTypes %}
+                                <th>{{ permissionType.name }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for resource in resources %}
+                            <tr>
+                            <td>{{ resource.name }}</td>
+                            {% if resArr[resource.name] is defined %}
+                            {% for resId, resPermission in resArr[resource.name] %}
+                                {% for permissionType in permissionTypes %}
+                                {% if resPermission[permissionType.name] is defined %}
+                                    <td><input id="{{ resPermission[permissionType.name] }}-{{ resId }}" type="checkbox" name="" value="" ></td>
+                                {% else %}
+                                    <td> </td>
+                                {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            {% else %}
+                                <td> </td>
+                            {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('permission-matrix') }}
+{% endblock %}

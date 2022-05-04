@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Guest entry
+{% endblock %}
+
+{% block body %}
+    {# Guest book view #}
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Guestbook Entry Detail</h4>
+                <p class="card-description">
+                    {% if guestDetail.type == 'text' %}
+                        {{ guestDetail.information }}
+                    {% else %}
+                        <img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img" height="auto" width="25%"/>
+{#                        <img src="{{ asset('uploads/' ~ guestDetail.image) | imagine_filter('guest_image')}}" class="img-thumbnail" alt="img"/>#}
+                    {% endif %} </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <address>
+                            <p class="font-weight-bold">Guest name:</p> {{ guestDetail.name }}
+                        </address>
+                    </div>
+                    <div class="col-md-12">
+                        <address>
+                            <p class="font-weight-bold">Status:</p>
+                            {% if guestDetail.status == 1 %}
+                                <label class="badge badge-success">Approved</label>
+                            {% elseif guestDetail.status == -1 %}
+                                <label class="badge badge-danger">Disapproved</label>
+                            {% else %}
+                                <label class="badge badge-warning">Pending</label>
+                            {% endif %}
+                        </address>
+                    </div>
+                    <div class="col-md-12" style="float: right">
+                    <a href="{{ path('guests_list') }}" class="btn btn-light">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('guest-detail') }}
+{% endblock %}

@@ -1,0 +1,29 @@
+App\Entity\Master\ResourcePermission:
+    type: entity
+    table: resource_permissions
+    repositoryClass: App\Repository\Master\ResourcePermissionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+    oneToMany:
+        permissionMatrices:
+            targetEntity: PermissionMatrix
+            mappedBy: resourcePermission
+
+    manyToOne:
+        resource:
+            targetEntity: Resource
+            inversedBy: resourcePermissions
+            joinColumn:
+                name: resource_id
+                referencedColumnName: id
+        permissionType:
+            targetEntity: PermissionType
+            inversedBy: resourcePermissions
+            joinColumn:
+                name: permission_type_id
+                referencedColumnName: id

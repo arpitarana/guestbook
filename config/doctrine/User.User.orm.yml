@@ -1,0 +1,76 @@
+App\Entity\User\User:
+    type: entity
+    table: user
+    repositoryClass: App\Repository\User\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 255
+            column: username
+        firstName:
+            type: string
+            length: 255
+            column: first_name
+        lastName:
+            type: string
+            length: 255
+            nullable: true
+            column: last_name
+        password:
+            type: string
+            length: 255
+        salt:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        isEnabled:
+            type: boolean
+            nullable: true
+            column: is_enabled
+        createdAt:
+            type: datetime
+            nullable: true
+            column: created_at
+            gedmo:
+                timestampable: { on: create }
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+            gedmo:
+                timestampable: { on: update }
+        createdBy:
+            type: string
+            length: 255
+            nullable: true
+            column: created_by
+            gedmo:
+                blameable:
+                    on: create
+        updatedBy:
+            type: string
+            length: 255
+            nullable: true
+            column: updated_by
+            gedmo:
+                blameable:
+                    on: update
+        lastLoginAt:
+            type: datetime
+            nullable: true
+            column: last_login_at
+        roles:
+            type: array
+    oneToMany:
+        guestDetails:
+            targetEntity: App\Entity\Guest\GuestDetail
+            mappedBy: user
+    lifecycleCallbacks: {  }

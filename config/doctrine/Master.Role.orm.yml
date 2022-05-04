@@ -1,0 +1,18 @@
+App\Entity\Master\Role:
+    type: entity
+    table: roles
+    repositoryClass: App\Repository\Master\RoleRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    oneToMany:
+        permissionMatrices:
+            targetEntity: PermissionMatrix
+            mappedBy: role

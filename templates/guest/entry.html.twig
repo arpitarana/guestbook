@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Guest entry
+{% endblock %}
+
+{% block body %}
+    {# Guest book entry #}
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Guestbook Details</h4>
+                {{ form_start(form, {attr: {novalidate: 'novalidate', 'class':'forms-sample'}}) }}
+                    <div class="form-group">
+                        <label class="col-sm-3 col-form-label">Guest name</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.name) }}
+                            <div class="has-error">{{ form_errors(form.name) }}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Select Type</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.type) }}
+                            <div class="has-error">{{ form_errors(form.type) }}</div>
+                        </div>
+                    </div>
+                    {% if form.imageFile.vars.errors|length > 0 %}
+                        {% set showInformation = "display:none" %}
+                        {% set showImageFile = "display:block" %}
+                    {% elseif form.information.vars.errors|length > 0 %}
+                        {% set showInformation = "display:block" %}
+                        {% set showImageFile = "display:none" %}
+                    {% else %}
+                        {% set showInformation = "display:block" %}
+                        {% set showImageFile = "display:none" %}
+                    {% endif %}
+                    <div class="form-group" id="div-guest-text" style="{{ showInformation }}">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Information</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.information) }}
+                            <div class="has-error">{{ form_errors(form.information) }}</div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="div-guest-image" style="{{ showImageFile }}">
+                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Image</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.imageFile) }}
+                            <div class="has-error">{{ form_errors(form.imageFile) }}</div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-gradient-primary me-2">Save</button>
+                    <a href="{{ path('guests_list') }}" class="btn btn-light">Cancel</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('guest-detail') }}
+{% endblock %}

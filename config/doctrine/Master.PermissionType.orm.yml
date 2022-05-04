@@ -1,0 +1,19 @@
+App\Entity\Master\PermissionType:
+    type: entity
+    table: permission_type
+    repositoryClass: App\Repository\Master\PermissionTypeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            unique: true
+    oneToMany:
+        resourcePermissions:
+            targetEntity: ResourcePermission
+            mappedBy: permissionType

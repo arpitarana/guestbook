@@ -1,0 +1,80 @@
+App\Entity\User\User:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: [email]
+        message: 'A user with this email already exists!'
+        groups: [ add_edit_user ]
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: [username]
+        message: 'A user with this user name already exists!'
+        groups: [ add_edit_user ]
+    - App\Validator\User\PasswordConstraint:
+        groups: [add_edit_user]
+  properties:
+    username:
+      - NotBlank:
+          message: "Username cannot be blank"
+          groups: [ add_edit_user ]
+      - Length:
+          min: 3
+          max: 255
+          minMessage: 'Username should be minimum {{ limit }} characters'
+          maxMessage: 'Username cannot exceed {{ limit }} characters'
+          groups: [ add_edit_user ]
+      - Regex:
+          pattern: '/[^a-zA-Z0-9-_]/'
+          match:   false
+          message: "Username allows only a-z,A-Z,0-9,_"
+          groups: [ add_edit_user ]
+
+    firstName:
+      - NotBlank:
+          message: "Firstname cannot be blank"
+          groups: [ add_edit_user ]
+      - Length:
+          min: 3
+          max: 255
+          minMessage: 'Firstname should be minimum {{ limit }} characters'
+          maxMessage: 'Firstname cannot exceed {{ limit }} characters'
+          groups: [ add_edit_user ]
+    lastName:
+      - NotBlank:
+          message: "Lastname cannot be blank"
+          groups: [ add_edit_user ]
+      - Length:
+          min: 3
+          max: 255
+          minMessage: 'Lastname should be minimum {{ limit }} characters'
+          maxMessage: 'Lastname cannot exceed {{ limit }} characters'
+          groups: [ add_edit_user ]
+    email:
+      - NotBlank:
+          message: "Email cannot be blank"
+          groups: [ add_edit_user ]
+      - Email:
+          message: "This is not a valid email"
+          groups: [ add_edit_user ]
+      - Length:
+          max: 255
+          maxMessage: 'Email cannot exceed 255 characters'
+          groups: [ add_edit_user ]
+
+App\Entity\Guest\GuestDetail:
+  constraints:
+    - App\Validator\Guest\GuestConstraint:
+        groups: [add_edit_guestdetail]
+  properties:
+    name:
+      - NotBlank:
+          message: "Please enter Guest name."
+          groups: [ add_edit_guestdetail ]
+      - Length:
+          min: 3
+          max: 255
+          minMessage: 'Guest name should be minimum {{ limit }} characters.'
+          maxMessage: 'Guest name cannot exceed {{ limit }} characters.'
+          groups: [ add_edit_guestdetail ]
+    type:
+      - NotBlank:
+          message: "Please select type"
+          groups: [ add_edit_guestdetail ]
