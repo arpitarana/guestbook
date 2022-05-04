@@ -5,6 +5,8 @@ namespace App\Controller\Guest;
 use App\Entity\Guest\GuestDetail;
 use App\Entity\User\User;
 use App\Form\Guest\GuestDetailType;
+use App\Form\Guest\GuestSearchType;
+use App\Form\Guest\Model\GuestSearch;
 use App\Service\Guest\GuestManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,9 +27,18 @@ class GuestController extends AbstractController
      */
     public function index(Request $request, GuestManager $guestManager, PaginatorInterface $paginator)
     {
+        $guestSearch = new GuestSearch();
+
+        $guestSearchForm = $this->createForm(GuestSearchType::class, $guestSearch);
+        $guestSearchForm->handleRequest($request);
         /* @var User $user */
         $user = $this->getUser();
-        $guestData = $guestManager->getGuestDataByRole(User::ROLE_ADMIN, $user);
+        if ($guestSearchForm->isSubmitted() && $guestSearchForm->isValid()) {
+            $guestData = $guestManager->getGuestDataByRole(User::ROLE_ADMIN, $user, $guestSearch);
+        }
+        else {
+            $guestData = $guestManager->getGuestDataByRole(User::ROLE_ADMIN, $user, $guestSearch);
+        }
 
         $pagination = $paginator->paginate(
             $guestData, /* guest data list object */
@@ -36,7 +47,8 @@ class GuestController extends AbstractController
         );
 
         return $this->render('guest/index.html.twig', [
-            'guestData' => $pagination
+            'guestData' => $pagination,
+            'form' => $guestSearchForm->createView(),
         ]);
     }
 

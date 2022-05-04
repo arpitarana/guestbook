@@ -2,6 +2,7 @@
 
 namespace App\Repository\Guest;
 
+use App\Form\Guest\Model\GuestSearch;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -16,7 +17,7 @@ class GuestDetailRepository extends EntityRepository
      * @param int $userId
      * @return int|mixed|string
      */
-    public function getGuestData($userId = null)
+    public function getGuestData(GuestSearch $guestSearch, $userId = null)
     {
         $qb = $this->createQueryBuilder('g');
         $qb->select('g');
@@ -24,6 +25,18 @@ class GuestDetailRepository extends EntityRepository
             $qb->where('g.user = :userId')
                 ->setParameter('userId', $userId);
         }
+
+        if ($guestSearch->getName()) {
+            $qb->andWhere('g.name LIKE :name')
+                ->setParameter('name', '%' . $guestSearch->getName() . '%');
+        }
+
+        if (($guestSearch->getStatus() != null && $guestSearch->getStatus()) ||
+            ($guestSearch->getStatus() != null && $guestSearch->getStatus() == 0)) {
+            $qb->andWhere('g.status = :status')
+                ->setParameter('status', $guestSearch->getStatus());
+        }
+
         $qb->orderBy('g.id', 'DESC');
         return $qb->getQuery();
     }

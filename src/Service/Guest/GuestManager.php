@@ -31,13 +31,13 @@ class GuestManager
      * @param $role
      * @return GuestDetail[]|array|object[]
      */
-    public function getGuestDataByRole($role, User $user)
+    public function getGuestDataByRole($role, User $user, $guestSearch)
     {
         if (in_array($role, $user->getRoles())) {
-            $guestData = $this->entityManager->getRepository(GuestDetail::class)->getGuestData();
+            $guestData = $this->entityManager->getRepository(GuestDetail::class)->getGuestData($guestSearch);
         }
         else {
-            $guestData = $this->entityManager->getRepository(GuestDetail::class)->getGuestData($user->getId());
+            $guestData = $this->entityManager->getRepository(GuestDetail::class)->getGuestData($guestSearch, $user->getId());
         }
 
         return $guestData;
