@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+ini_set('xdebug.mode', 'coverage');
 if (!ini_get('date.timezone')) {
     ini_set('date.timezone', 'UTC');
 }
