@@ -44,7 +44,7 @@ class UserManager
             return true;
         }
         catch (\Exception $e) {
-            $e->getMessage();
+            return false;
         }
     }
 
@@ -54,17 +54,19 @@ class UserManager
      */
     public function saveUser(User $user)
     {
-        $password = $user->getPassword();
-        $user->setRawPassword($password);
-        $encoder = $this->encoderFactory->getEncoder($user);
-        $user->encodePassword($encoder);
+        try{
+            $password = $user->getPassword();
+            $user->setRawPassword($password);
+            $encoder = $this->encoderFactory->getEncoder($user);
+            $user->encodePassword($encoder);
 
-        $user->setSalt($user->getSalt());
-        $user->setRoles(['ROLE_GUEST']);
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return true;
+            $user->setSalt($user->getSalt());
+            $user->setRoles(['ROLE_GUEST']);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e){
+            return false;
+        }
     }
 }
