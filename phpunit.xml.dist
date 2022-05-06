@@ -15,6 +15,8 @@
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+        <server name="XDEBUG_MODE" value="coverage" />
+        <server name="KERNEL_CLASS" value="App\Kernel" />
     </php>
 
     <testsuites>
@@ -32,6 +34,9 @@
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
+    <logging>
+        <log type="coverage-html" target="./CodeCoverage/"/>
+    </logging>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
     <!--
