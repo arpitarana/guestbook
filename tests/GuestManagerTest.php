@@ -7,7 +7,6 @@ use App\Entity\User\User;
 use App\Service\Guest\GuestManager;
 use App\Form\Guest\Model\GuestSearch;
 use App\Entity\Guest\GuestDetail;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class GuestManagerTest extends KernelTestCase
 {
@@ -44,25 +43,24 @@ class GuestManagerTest extends KernelTestCase
         $guestDetail->setInformation('Guest information');
 
         //save with type text
-        $data = $guestManager->saveGuestData('text', null, $user, $guestDetail);
+        $data = $guestManager->saveGuestData('text', $user, $guestDetail);
         $this->assertSame(true, $data);
-
 
         $pathIncludingFilename = __DIR__.'/../assets/images/favicon.png';
         $pathIncludingFilenameCopy = __DIR__.'/../assets/images/favicon1.png';
         copy($pathIncludingFilename, $pathIncludingFilenameCopy);
-        $fileName = 'favicon.png';
+//        $fileName = 'favicon.png';
 
-        $file = new UploadedFile(
-            $pathIncludingFilenameCopy, 
-            $fileName, 
-            'image/png', 
-            null, 
-            false
-        );
+//        $file = new UploadedFile(
+//            $pathIncludingFilenameCopy,
+//            $fileName,
+//            'image/png',
+//            null,
+//            false
+//        );
         //save with type image
         $guestDetail->setType('image');
-        $data = $guestManager->saveGuestData('image', $file, $user, $guestDetail);
+        $data = $guestManager->saveGuestData('image', $user, $guestDetail);
         $this->assertSame(true, $data);
     }
     public function testUpdateStatus(): void

@@ -2,6 +2,8 @@
 
 namespace App\Entity\Guest;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * GuestDetail
  */
@@ -61,14 +63,6 @@ class GuestDetail
      * @var int
      */
     protected $status = false;
-
-    /**
-     * @return mixed
-     */
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
 
     /**
      * Get id
@@ -242,5 +236,105 @@ class GuestDetail
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    // Temporary store the file name
+    private $tempFilename;
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(UploadedFile $file = null)
+    {
+        $this->imageFile = $file;
+        $this->extension = $this->imageFile->guessExtension();
+        // Replacing a file ? Check if we already have a file for this entity
+        if (null !== $this->extension) {
+            // Save file extension so we can remove it later
+            $this->tempFilename = $this->extension;
+            // Reset values
+            $this->extension = null;
+            $this->image = null;
+        }
+        $this->preUpload();
+    }
+
+    public function preUpload()
+    {
+        // If no file is set, do nothing
+        if (null === $this->imageFile) {
+            return;
+        }
+
+        // The file name is the entity's ID
+        // We also need to store the file extension
+        $this->extension = $this->imageFile->guessExtension();
+
+        // And we keep the original name
+        //$this->attachment = $this->file->getClientOriginalName();
+
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->image = $filename . '.' . $this->getImageFile()->guessExtension();
+    }
+
+    public function upload()
+    {
+        // If no file is set, do nothing
+        if (null === $this->imageFile) {
+            return;
+        }
+
+        // A file is present, remove it
+        if (null !== $this->tempFilename) {
+            $oldFile = $this->getUploadRootDir() . '/' . $this->image;
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+
+        // Move the file to the upload folder
+        $this->imageFile->move(
+            $this->getUploadRootDir(),
+            $this->image
+        );
+    }
+
+    public function preRemoveUpload()
+    {
+        if($this->getImage()) {
+            // Save the name of the file we would want to remove
+            $this->tempFilename = $this->getUploadRootDir() . '/' . $this->getImage();
+        }
+    }
+
+    public function removeUpload()
+    {
+        // PostRemove => We no longer have the entity's ID => Use the name we saved
+        if ($this->tempFilename && file_exists($this->tempFilename)) {
+            // Remove file
+            unlink($this->tempFilename);
+        }
+    }
+
+    public function getUploadDir()
+    {
+        // Upload directory
+        return self::$imageFilePath;
+    }
+
+    public function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../public/' . $this->getUploadDir();
+    }
+
+    public function removeImage($fileName)
+    {
+        $imageFile = $this->getUploadRootDir() . '/' .$fileName;
+        if (file_exists($imageFile)) {
+            // Remove file
+            unlink($imageFile);
+        }
     }
 }

@@ -49,3 +49,9 @@ App\Entity\Guest\GuestDetail:
       joinColumn:
         name: user_id
         referenceColumnName: id
+
+  lifecycleCallbacks:
+    postPersist: [ upload ]
+    postUpdate: [ upload ]
+    preRemove: [ preRemoveUpload ]
+    postRemove: [ removeUpload ]

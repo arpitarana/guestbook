@@ -42,10 +42,12 @@ services:
         tags:
             - { name: "validator.constraint_validator", alias: 'password_constraint' }
 
-    file_uploader:
-        class: App\Service\Master\FileUploader
-
     guest_constraint:
         class: App\Validator\Guest\GuestConstraintValidator
         tags:
             - { name: "validator.constraint_validator", alias: 'guest_constraint' }
+
+    guest_subscriber:
+        class: App\Subscriber\Guest\GuestSubscriber
+        tags:
+            - { name: doctrine.event_subscriber}

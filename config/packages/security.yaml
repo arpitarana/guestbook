@@ -53,7 +53,7 @@ security:
             #form_login: ~
             logout_on_user_change: true
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/guests, role: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
         - { path: ^/user, role: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
 #        - { path: ^/$, role: [IS_AUTHENTICATED_FULLY] }

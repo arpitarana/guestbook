@@ -5,7 +5,6 @@ namespace App\Service\Guest;
 use App\Entity\Guest\GuestDetail;
 use App\Entity\User\User;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Service\Master\FileUploader;
 
 /**
  * Class GuestManager
@@ -16,15 +15,10 @@ class GuestManager
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var FileUploader */
-    private $fileUploader;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        FileUploader $fileUploader
+        EntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
-        $this->fileUploader = $fileUploader;
     }
 
     /**
@@ -57,19 +51,17 @@ class GuestManager
 
     /**
      * @param $type
-     * @param $imageFile
      * @param User $user
      * @param $guestDetail
      * @return bool
      */
-    public function saveGuestData($type, $imageFile, User $user, $guestDetail)
+    public function saveGuestData($type, User $user, $guestDetail)
     {
         if ($type == 'image') {
-            if ($imageFile) {
-                $filePath = GuestDetail::$imageFilePath;
-                $profilePic = $this->fileUploader->uploadImage($imageFile, $filePath);
-                $guestDetail->setImage($profilePic);
-            }
+            $guestDetail->setInformation(NULL);
+        }
+        else {
+            $guestDetail->setImage(NULL);
         }
         $guestDetail->setUser($user);
         $this->entityManager->persist($guestDetail);

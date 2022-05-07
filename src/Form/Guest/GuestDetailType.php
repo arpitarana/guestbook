@@ -57,7 +57,7 @@ class GuestDetailType extends AbstractType
                     'attr' => [
                         'class' => 'select-type'
                     ],
-                    'data' => 'text'
+                    'data' => ($builder->getData()->getId() ? $builder->getData()->getType()  : 'text')
                 ]
             );
     }

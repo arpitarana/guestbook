@@ -68,6 +68,7 @@ class MailManager
         }
         catch (\Exception $e) {
             $e->getMessage();
+            return false;
         }
     }
 
@@ -91,12 +92,15 @@ class MailManager
             ->setTo($user->getEmail())
             ->setBody($emailTemplate, 'text/html');
 
+        $this->mailer->send($message);
+
         try {
             $this->mailer->send($message);
             return true;
         }
         catch (\Exception $e) {
             $e->getMessage();
+            return false;
         }
     }
 }

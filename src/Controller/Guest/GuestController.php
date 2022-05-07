@@ -96,8 +96,7 @@ class GuestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $guestManager->saveGuestData($form['type']->getData(), $form['imageFile']->getData(),
-                $this->getUser(), $guestDetail);
+            $guestManager->saveGuestData($form['type']->getData(), $this->getUser(), $guestDetail);
 
             $this->get('session')->getFlashBag()->set(
                 'flashSuccess',
