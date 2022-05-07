@@ -8,40 +8,15 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
-
     </head>
     <body>
-    {% set infoMessages = [] %}
-    {% set successMessages = [] %}
-    {% set errorMessages = [] %}
-    {% if app.session and app.session.flashBag.has('flashInfo') %}
-        {% for flashMessage in app.session.flashbag.get('flashInfo') %}
-            {% set infoMessages = infoMessages|merge([flashMessage]) %}
-        {% endfor %}
-        <div id="infoMessages" data-id="{{ infoMessages|json_encode() }}"></div>
-    {% endif %}
-
-    {% if app.session and  app.session.flashBag.has('flashSuccess') %}
-        {% for flashMessage in app.session.flashbag.get('flashSuccess') %}
-            {% set successMessages = successMessages|merge([flashMessage]) %}
-        {% endfor %}
-        <div id="successMessages" data-id="{{ successMessages|json_encode() }}"></div>
-    {% endif %}
-
-    {% if app.session and app.session.flashBag.has('flashError') %}
-        {% for flashMessage in app.session.flashbag.get('flashError') %}
-            {% set errorMessages = errorMessages|merge([flashMessage]) %}
-        {% endfor %}
-        <div id="errorMessages" data-id="{{ errorMessages|json_encode() }}"></div>
-    {% endif %}
-
         <div class="container-scroller">
             {% include 'header.html.twig' %}
             <div class="container-fluid page-body-wrapper">
                 {% include 'sidebar.html.twig' %}
                 <div class="main-panel">
                     <div class="content-wrapper">
+                        {% include 'flashMessage.html.twig' %}
                         {% block body %}
                         {% endblock %}
                     </div>
