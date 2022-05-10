@@ -15,7 +15,7 @@ class GuestDetail
     const DISAPPROVE_STATUS = -1;
     const PENDING_STATUS = 0;
 
-    const PAGE_RANGE = 10;
+    const PAGE_RANGE = 5;
 
     /**
      * @var int

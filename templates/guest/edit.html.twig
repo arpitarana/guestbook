@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Guest entry
+    Guest edit
 {% endblock %}
 
 {% block body %}
@@ -53,6 +53,8 @@
                             {{ form_widget(form.imageFile) }}
                             <div class="has-error">{{ form_errors(form.imageFile) }}</div>
                         </div>
+                        <br>
+                        <img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img" height="200px" width="200px"/>
                     </div>
                     <button type="submit" class="btn btn-gradient-primary me-2">Save</button>
                     <a href="{{ path('guests_list') }}" class="btn btn-light">Cancel</a>

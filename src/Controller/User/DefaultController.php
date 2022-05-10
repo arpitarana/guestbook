@@ -6,6 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class DefaultController
+ * @package App\Controller\User
+ */
 class DefaultController extends AbstractController
 {
     /**

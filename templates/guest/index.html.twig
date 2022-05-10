@@ -58,7 +58,15 @@
                         <td> {{ guestDetail.name}} </td>
                         <td>
                             {% if guestDetail.type == 'text' %}
-                                {{ guestDetail.information }}
+                                {% if guestDetail.information|length > 50 %}
+
+                                        {{ guestDetail.information|slice(0, 50) }}
+                                    <a href="{{ path('guest_view', {'id':guestDetail.id}) }}">
+                                        read more ...
+                                    </a>
+                                {% else %}
+                                    {{ guestDetail.information }}
+                                {% endif %}
                             {% else %}
                                 <a href="{{ path('guest_view', {'id':guestDetail.id}) }}"><img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img"/></a>
                             {% endif %}

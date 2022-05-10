@@ -14,9 +14,9 @@
                     {% if guestDetail.type == 'text' %}
                         {{ guestDetail.information }}
                     {% else %}
-                        <img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img" height="auto" width="25%"/>
-{#                        <img src="{{ asset('uploads/' ~ guestDetail.image) | imagine_filter('guest_image')}}" class="img-thumbnail" alt="img"/>#}
-                    {% endif %} </p>
+                        <img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img" height="200px" width="200px"/>
+                    {% endif %}
+                </p>
                 <div class="row">
                     <div class="col-md-12">
                         <address>
