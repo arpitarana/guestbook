@@ -45,6 +45,7 @@ class MailManager
     /**
      * @param User $user
      * @return bool
+     * @description Forget password email configuration.
      */
     public function forgotPassword(User $user)
     {
@@ -75,6 +76,7 @@ class MailManager
     /**
      * @param User $user
      * @return bool
+     * @description Change password email configuration.
      */
     public function changePasswordEmail(User $user)
     {

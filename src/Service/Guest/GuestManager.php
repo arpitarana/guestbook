@@ -24,6 +24,7 @@ class GuestManager
     /**
      * @param $role
      * @return GuestDetail[]|array|object[]
+     * @description Get guest data by given user roles.
      */
     public function getGuestDataByRole($role, User $user, $guestSearch)
     {
@@ -41,6 +42,7 @@ class GuestManager
      * @param $status
      * @param GuestDetail $guestDetail
      * @return bool
+     * @description Update guest detail status.
      */
     public function updateStatus($status, GuestDetail $guestDetail)
     {
@@ -54,6 +56,7 @@ class GuestManager
      * @param User $user
      * @param $guestDetail
      * @return bool
+     * @description Save guest data.
      */
     public function saveGuestData($type, User $user, $guestDetail)
     {

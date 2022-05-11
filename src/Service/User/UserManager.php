@@ -30,6 +30,7 @@ class UserManager
      * @param User $user
      * @param $password
      * @return bool
+     * @description Update user password.
      */
     public function manageUpdatedPassword(User $user, $password)
     {
@@ -51,10 +52,11 @@ class UserManager
     /**
      * @param User $user
      * @return bool
+     * @description save user detail.
      */
     public function saveUser(User $user)
     {
-        try{
+        try {
             $password = $user->getPassword();
             $user->setRawPassword($password);
             $encoder = $this->encoderFactory->getEncoder($user);

@@ -24,6 +24,7 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserManager $userManager)
     {
+        /* @var User $user */
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -54,7 +55,8 @@ class UserController extends AbstractController
             if ($user) {
                 if ( $userManager->manageUpdatedPassword($user, $user->generatePassword())) {
                     if ( $mailManager->forgotPassword($user) ) {
-                        $this->get('session')->getFlashBag()->add('flashSuccess', 'Password changed successfully!');
+                        $this->get('session')->getFlashBag()->add('flashSuccess', 'A new password has 
+                        been sent to '.$email);
                         return $this->redirectToRoute('guests_list');
                     }
                     else {
@@ -63,21 +65,16 @@ class UserController extends AbstractController
                     }
                 }
                 else {
-                    $this->get('session')->getFlashBag()->add('flashErros', 'Update password has some issue!');
+                    $this->get('session')->getFlashBag()->add('flashErros', 'Update password has some 
+                    issue!');
                     return $this->redirectToRoute('guests_list');
                 }
-
-                $this->get('session')->getFlashBag()->set(
-                    'flashSuccess',
-                    'A new password has been sent to '.$email
-                );
             } else {
                 $this->get('session')->getFlashBag()->set(
                     'flashError',
                     'This email is not registered.'
                 );
             }
-
             return $this->redirectToRoute('app_login');
         }
 
@@ -99,18 +96,21 @@ class UserController extends AbstractController
             if ($form->isValid()) {
                 /* @var User $user */
                 $user = $this->getUser();
-                if ( $userManager->manageUpdatedPassword($user, $user->getRawPassword())) {
-                    if ( $mailManager->changePasswordEmail($user) ) {
-                        $this->get('session')->getFlashBag()->add('flashSuccess', 'Password changed successfully!');
+                if ($userManager->manageUpdatedPassword($user, $user->getRawPassword())) {
+                    if ($mailManager->changePasswordEmail($user) ) {
+                        $this->get('session')->getFlashBag()->add('flashSuccess', 'Password changed 
+                        successfully!');
                         return $this->redirectToRoute('guests_list');
                     }
                     else {
-                        $this->get('session')->getFlashBag()->add('flashErros', 'Mailer has some issue!');
+                        $this->get('session')->getFlashBag()->add('flashErros', 'Mailer has some 
+                        issue!');
                         return $this->redirectToRoute('guests_list');
                     }
                 }
                 else {
-                    $this->get('session')->getFlashBag()->add('flashErros', 'Update password has some issue!');
+                    $this->get('session')->getFlashBag()->add('flashErros', 'Update password has some 
+                    issue!');
                     return $this->redirectToRoute('guests_list');
                 }
             }

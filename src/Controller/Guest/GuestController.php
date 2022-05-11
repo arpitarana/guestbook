@@ -64,9 +64,7 @@ class GuestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var User $user
-             */
+            /** @var User $user */
             $user = $this->getUser();
             $guestManager->saveGuestData($form['type']->getData(), $user, $guestDetail);
             $this->get('session')->getFlashBag()->set(
@@ -98,9 +96,7 @@ class GuestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var User $user
-             */
+            /** @var User $user */
             $user = $this->getUser();
             $guestManager->saveGuestData($form['type']->getData(), $user, $guestDetail);
 
