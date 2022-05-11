@@ -18,11 +18,13 @@ class AppFixtures extends Fixture
     {
         $user = new User();
         $user->setUsername('admin');
-        $user->setEmail('admin@test.com'); // we can use company's standard email.
+        // we can use company's standard email.
+        $user->setEmail('admin@test.com');
         $user->setFirstName('Admin');
         $user->setLastName('Best');
         $user->setRoles(['ROLE_ADMIN']);
-        $password = 'admin'; // we can send an email too but I gave here static to run application easily for interviewer with read me after quickly run fixture.
+        // we can send an email too but I gave here static to run application easily for interviewer with read me after quickly run fixture.
+        $password = 'admin';
         $user->setRawPassword($password);
         $defaultEncoder = new MessageDigestPasswordEncoder('sha512', true, 5000);
         $encoders = [

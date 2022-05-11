@@ -1,4 +1,4 @@
-# guetbook
+# guestbook
 Application to add guest detail and detail will be approve/disapprove by Admin.
 Spade
 =====
@@ -7,6 +7,15 @@ Welcome to Guestbok - a fully-functional Symfony2 application.
 
 This document contains information on how to download, install, and start
 using Guestbook as a developer.
+
+# Prerequisite to set up this project
+
+    PHP 7.4.*
+    git
+    Symfony 4.4
+    Composer 2.*
+    Bootstrap 4
+    Doctrine 2
 
 1) Installing Guestbook
 -------------------
@@ -27,6 +36,7 @@ Git can be installed on various ways, depending on the environment:
 Guestbook can be fetched using the following command:
 
     git clone https://github.com/arpitarana/guetbook.git
+    git checkout master    
 
 ### Set up rights
 

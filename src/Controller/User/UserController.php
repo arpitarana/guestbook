@@ -5,19 +5,11 @@ namespace App\Controller\User;
 use App\Entity\User\User;
 use App\Form\User\ChangePasswordType;
 use App\Form\User\UserType;
-//use App\Form\User\ChangePasswordType;
-//use App\Managers\User\MailManager;
 use App\Service\User\MailManager;
 use App\Service\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 /**
  * User controller.
