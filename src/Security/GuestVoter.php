@@ -34,10 +34,6 @@ class GuestVoter extends Voter
             return false;
         }
 
-        if ($subject->getstatus() != guestdetail::PENDING_STATUS) {
-            return false;
-        }
-
         if ($user->getid() == $subject->getuser()->getId()) {
             return true;
         }

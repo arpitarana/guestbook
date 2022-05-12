@@ -97,11 +97,7 @@
                                             <a href="{{ path('guest_approve', {'id':guestDetail.id}) }}" class="dropdown-item" onclick="return confirm('Are you sure want to approve?');">Approve</a>
                                         {% endif %}
                                     {% else %}
-                                        {% if guestDetail.status == 0 %}
-                                            <a href="{{ path('guest_edit', {'id':guestDetail.id}) }}"  class="dropdown-item">Edit</a>
-                                        {% else %}
-                                            <a href="javascript:void(0);"  class="dropdown-item cannot-edit" data-status="{{ approvedStatus }}">Edit</a>
-                                        {% endif %}
+                                        <a href="{{ path('guest_edit', {'id':guestDetail.id}) }}"  class="dropdown-item">Edit</a>
                                     {% endif %}
                                 </div>
                             </div>

@@ -66,7 +66,11 @@ class GuestManager
         else {
             $guestDetail->setImage(NULL);
         }
-        $guestDetail->setUser($user);
+
+        if (!in_array(User::ROLE_ADMIN, $user->getRoles())) {
+            $guestDetail->setStatus(GuestDetail::PENDING_STATUS);
+            $guestDetail->setUser($user);
+        }
         $this->entityManager->persist($guestDetail);
         $this->entityManager->flush();
 

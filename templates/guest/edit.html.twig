@@ -53,8 +53,10 @@
                             {{ form_widget(form.imageFile) }}
                             <div class="has-error">{{ form_errors(form.imageFile) }}</div>
                         </div>
-                        <br>
-                        <img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img" height="200px" width="200px"/>
+                        {% if guestDetail.image %}
+                            <br>
+                            <img src="{{ asset('uploads/image/' ~ guestDetail.image) }}" alt="img" height="200px" width="200px"/>
+                        {% endif %}
                     </div>
                     <button type="submit" class="btn btn-gradient-primary me-2">Save</button>
                     <a href="{{ path('guests_list') }}" class="btn btn-light">Cancel</a>

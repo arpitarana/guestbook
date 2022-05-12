@@ -27,7 +27,7 @@ class GuestConstraintValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if ($type == 'image' && $guestDetail->getImageFile() == '') {
+        if ($guestDetail->getId() == null && $type == 'image' && $guestDetail->getImageFile() == '') {
             $this->context->buildViolation($constraint->imageRequired)
                 ->atPath('imageFile')
                 ->addViolation();
